@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LatestNews.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:LatestNews.Models"
+    xmlns:vm="clr-namespace:LatestNews.ViewModels"
+    x:Name="this"
+    Title="Latest News"
+    x:DataType="vm:MainPageViewModel">
+
+    <Grid>
+        <CollectionView ItemsSource="{Binding News}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="20" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:NewsDto">
+                    <!--<Border StrokeShape="RoundRectangle 10" StrokeThickness="0">
+                        <Grid RowDefinitions="Auto, Auto" RowSpacing="5">
+                            <Image
+                                Aspect="AspectFill"
+                                HeightRequest="150"
+                                Source="{Binding ImageUrl}" />
+                            <Grid Grid.Row="1" Padding="15,5">
+                                <Label
+                                    Grid.Row="1"
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    Text="{Binding Title}" />
+                            </Grid>
+                        </Grid>
+                    </Border>-->
+                    <Border
+                        BackgroundColor="LightCyan"
+                        StrokeShape="RoundRectangle 0"
+                        StrokeThickness="0">
+                        <Grid ColumnDefinitions="150, *" ColumnSpacing="5">
+                            <Image
+                                Aspect="AspectFill"
+                                MaximumHeightRequest="150"
+                                Source="{Binding ImageUrlOrSourceIcon}"
+                                WidthRequest="150" />
+                            <Grid
+                                Grid.Column="1"
+                                Padding="10"
+                                RowDefinitions="*, Auto"
+                                RowSpacing="5">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    Text="{Binding Title}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Row="1"
+                                    Text="{Binding SourceName}"
+                                    VerticalOptions="End" />
+                            </Grid>
+                            <Grid.Shadow>
+                                <Shadow />
+                            </Grid.Shadow>
+                        </Grid>
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Radius="10" />
+                        </Border.Shadow>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=GoToDetailsPageCommand}" CommandParameter="{Binding Link}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ActivityIndicator
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            VerticalOptions="Center" />
+    </Grid>
+
+</ContentPage>
