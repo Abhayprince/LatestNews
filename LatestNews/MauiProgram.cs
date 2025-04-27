@@ -24,9 +24,10 @@ namespace LatestNews
             ConfigureRefit(builder.Services);
 
             builder.Services.AddSingleton<MainPageViewModel>()
-                            .AddSingleton<MainPage>();
+                            ;//.AddSingleton<MainPage>();
 
-            builder.Services.AddTransient<NewsDetailsViewModel>().AddTransient<NewsDetailPage>();
+            builder.Services.AddTransient<NewsDetailsViewModel>()
+                ;//.AddTransient<NewsDetailPage>();
 
             return builder.Build();
         }

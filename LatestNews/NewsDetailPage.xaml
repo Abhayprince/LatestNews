@@ -6,7 +6,76 @@
     xmlns:vm="clr-namespace:LatestNews.ViewModels"
     x:DataType="vm:NewsDetailsViewModel"
     Shell.PresentationMode="ModalAnimated">
-    <Grid>
+
+    <Grid RowDefinitions="250, *" RowSpacing="5">
+        <Border
+            Grid.Row="0"
+            BackgroundColor="Beige"
+            StrokeThickness="0">
+            <Image Aspect="AspectFill" Source="{Binding News.ImageUrlOrSourceIcon}" />
+        </Border>
+        <Grid
+            Grid.Row="1"
+            Padding="10,0,10,10"
+            RowDefinitions="Auto, Auto, *, Auto"
+            RowSpacing="10">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto, * , Auto">
+                <HorizontalStackLayout
+                    Grid.Column="0"
+                    Padding="5,4"
+                    BackgroundColor="AntiqueWhite"
+                    Spacing="5">
+                    <Image HeightRequest="20" Source="{Binding News.SourceIcon}" />
+                    <Label Text="{Binding News.SourceName}" />
+                </HorizontalStackLayout>
+                <Label
+                    Grid.Column="2"
+                    Padding="10,4"
+                    BackgroundColor="Aquamarine"
+                    Text="{Binding News.PubDate}" />
+            </Grid>
+            <Label
+                Grid.Row="1"
+                FontAttributes="Bold"
+                FontSize="16"
+                Text="{Binding News.Title}" />
+            <Label Grid.Row="2" Text="{Binding News.Description}" />
+            <VerticalStackLayout Grid.Row="3">
+                <HorizontalStackLayout Spacing="5">
+                    <Label Text="Language: " />
+                    <Label Text="{Binding News.Language}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="5">
+                    <Label Text="Categories: " />
+                    <Label Text="{Binding News.Categories}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="5">
+                    <Label Text="Countries: " />
+                    <Label Text="{Binding News.Countries}" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
+
+
+        <Button
+            Grid.RowSpan="2"
+            Margin="10"
+            Padding="0"
+            BackgroundColor="Red"
+            Command="{Binding GoBackCommand}"
+            CornerRadius="22"
+            FontAttributes="Bold"
+            FontSize="18"
+            HorizontalOptions="Center"
+            Text="x"
+            VerticalOptions="End">
+            <Button.Shadow>
+                <Shadow />
+            </Button.Shadow>
+        </Button>
+    </Grid>
+
+    <!--<Grid>
         <WebView Navigated="WebView_Navigated" Source="{Binding SourceUrl}" />
         <ActivityIndicator
             HorizontalOptions="Center"
@@ -27,5 +96,5 @@
                 <Shadow />
             </Button.Shadow>
         </Button>
-    </Grid>
+    </Grid>-->
 </ContentPage>

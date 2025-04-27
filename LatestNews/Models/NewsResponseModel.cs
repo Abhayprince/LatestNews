@@ -76,10 +76,10 @@ public class NewsDto
     public string Language { get; set; }
 
     [JsonPropertyName("country")]
-    public List<string> Country { get; set; }
+    public List<string> Country { get; set; } = [];
 
     [JsonPropertyName("category")]
-    public List<string> Category { get; set; }
+    public List<string> Category { get; set; } = [];
 
     [JsonPropertyName("sentiment")]
     public string Sentiment { get; set; }
@@ -101,5 +101,13 @@ public class NewsDto
 
     public string ImageUrlOrSourceIcon =>
         string.IsNullOrWhiteSpace(ImageUrl) ? SourceIcon : ImageUrl;
+
+    public string Categories => Category?.Count > 0
+                                ? string.Join(", ", Category)
+                                : "";
+    public string Countries => Country?.Count > 0
+                                ? string.Join(", ", Country)
+                                : "";
+            
 }
 

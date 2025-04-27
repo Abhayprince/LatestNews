@@ -23,14 +23,26 @@ public partial class MainPageViewModel : ObservableObject
     [ObservableProperty]
     private bool _isBusy;
 
-    public async Task FetchNewsAsync()
+    [ObservableProperty]
+    private bool _isRefreshing;
+
+    [RelayCommand]
+    private async Task RefreshNewsAsync()
     {
-        IsBusy = true;
+        await FetchNewsAsync(useIsBusy: false);
+        IsRefreshing = false;
+    }
+
+    public async Task FetchNewsAsync(bool useIsBusy = true)
+    {
+        if(useIsBusy)
+            IsBusy = true;
         try
         {
             var response = await _newsApi.GetLatestNewsAsync();
             if (response.TotalResults > 0 && response.Results?.Count > 0)
             {
+                News.Clear();
                 foreach (var item in response.Results)
                 {
                     News.Add(item);
@@ -48,17 +60,28 @@ public partial class MainPageViewModel : ObservableObject
         }
         finally
         {
-            IsBusy = false;
+            if (useIsBusy)
+                IsBusy = false;
         }
     }
 
 
+    //[RelayCommand]
+    //private async Task GoToDetailsPageAsync(string sourceUrl)
+    //{
+    //    var parameter = new Dictionary<string, object>
+    //    {
+    //        [nameof(NewsDetailsViewModel.SourceUrl)] = sourceUrl,
+    //    };
+
+    //    await Shell.Current.GoToAsync(nameof(NewsDetailPage), parameter);
+    //}
     [RelayCommand]
-    private async Task GoToDetailsPageAsync(string sourceUrl)
+    private async Task GoToDetailsPageAsync(NewsDto news)
     {
         var parameter = new Dictionary<string, object>
         {
-            [nameof(NewsDetailsViewModel.SourceUrl)] = sourceUrl,
+            [nameof(NewsDetailsViewModel.News)] = news,
         };
 
         await Shell.Current.GoToAsync(nameof(NewsDetailPage), parameter);
